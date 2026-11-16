@@ -1,0 +1,25 @@
+name: Build unsigned IPA
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bundle Three.js for offline use
+        run: |
+          curl -fsSL https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js -o Resources/www/three.min.js
+          sed -i '' 's#https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js#three.min.js#' Resources/www/index.html
+          grep -q 'src="three.min.js"' Resources/www/index.html
+      - run: brew install xcodegen && xcodegen generate
+      - name: Archive without signing
+        run: |
+          xcodebuild archive -project 3DStudio.xcodeproj -scheme 3DStudio -configuration Release \
+            -sdk iphoneos -archivePath build/3DStudio.xcarchive \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+      - name: Package IPA
+        run: |
+          mkdir -p Payload && cp -R build/3DStudio.xcarchive/Products/Applications/3DStudio.app Payload/
+          zip -qr 3DStudio-Unsigned.ipa Payload
+          unzip -l 3DStudio-Unsigned.ipa | head
+      - uses: actions/upload-artifact@v4
+        with: {name: 3DStudio-Unsigned-IPA, path: 3DStudio-Unsigned.ipa}
