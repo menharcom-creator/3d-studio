@@ -1,26 +1,26 @@
-name: 3DStudio
+name: StudioApp
 options: {bundleIdPrefix: com.menhar, deploymentTarget: {iOS: "15.0"}}
 targets:
-  3DStudio:
+  StudioApp:
     type: application
     platform: iOS
     sources: [Sources, {path: Resources, type: folder}]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.menhar.3dstudio
+        PRODUCT_BUNDLE_IDENTIFIER: com.menhar.studio3d
         PRODUCT_NAME: 3DStudio
+        PRODUCT_MODULE_NAME: StudioApp
         SWIFT_VERSION: "5.0"
-        GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_KEY_UILaunchScreen_Generation: YES
-        INFOPLIST_KEY_CFBundleDisplayName: "3D Studio"
-        INFOPLIST_KEY_UISupportedInterfaceOrientations: "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
-        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
-        INFOPLIST_KEY_UIRequiresFullScreen: YES
-        INFOPLIST_KEY_UIStatusBarHidden: YES
         TARGETED_DEVICE_FAMILY: "1,2"
         CODE_SIGNING_ALLOWED: NO
     info:
       path: Info.plist
       properties:
+        CFBundleDisplayName: 3D Studio
+        UILaunchScreen: {}
+        UIRequiresFullScreen: true
+        UIStatusBarHidden: true
         UIFileSharingEnabled: true
         LSSupportsOpeningDocumentsInPlace: true
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UISupportedInterfaceOrientations~ipad: [UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
